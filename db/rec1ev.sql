@@ -3,8 +3,9 @@ DROP TABLE IF EXISTS usuarios CASCADE;
 CREATE TABLE usuarios
 (
     id       bigserial    PRIMARY KEY
-  , nombre   varchar(255) NOT NULL UNIQUE
-  , password char(64)
+  , numero   varchar(255) NOT NULL UNIQUE
+  , nombre   varchar(255)
+  , password varchar(64)
 );
 
 DROP TABLE IF EXISTS citas CASCADE;
@@ -17,3 +18,6 @@ CREATE TABLE citas
   , usuario_id bigint    NOT NULL REFERENCES usuarios (id)
                          ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+INSERT INTO usuarios (numero, nombre, password)
+VALUES ('123', 'Pepe', crypt('123', gen_salt('bf', 12)));
