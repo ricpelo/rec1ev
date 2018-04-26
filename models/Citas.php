@@ -60,34 +60,38 @@ class Citas extends \yii\db\ActiveRecord
         return $this->hasOne(Usuarios::className(), ['id' => 'usuario_id'])->inverseOf('citas');
     }
 
+    //   select instante::date
+    //     from citas
+    // group by instante::date
+    //   having count(*) < 44
+    // order by instante::date
+    //    limit 1;
+
+    //   select *
+    //    from generate_series('2018-04-27 08:00'::timestamp, '2018-04-27 18:45'::timestamp, '15 minutes') t(f)
+    //   where f not in (select instante
+    //                     from citas
+    //                    where instante::date = '2018-04-27');
+
     public static function siguiente(): DateTime
     {
-        $ultimo = static::find()->max('instante');
+        $ultimo = static::find()->max('instante') ?? 'now';
+        $zona = new DateTimeZone(Yii::$app->formatter->timeZone);
 
-        if ($ultimo === null) {
-            $ultimo = (new DateTime('now'))
-                ->setTimeZone(new DateTimeZone(Yii::$app->formatter->timeZone))
-                ->add(new DateInterval('P1D'))
-                ->setTime(10, 0, 0)
-                ->setTimeZone(new DateTimeZone('UTC'));
-        } else {
-            $local = (new DateTime($ultimo))
-                ->setTimeZone(new DateTimeZone(Yii::$app->formatter->timeZone))
-                ->format('H:i');
-            if ($local == '20:45') {
-                // sumar un día y ponerlo a las 10:00
-                $ultimo = (new DateTime($ultimo))
-                    ->setTimeZone(new DateTimeZone(Yii::$app->formatter->timeZone))
+        $local = (new DateTime($ultimo))->setTimeZone($zona)->format('H:i');
+
+        if ($local == '20:45' || $ultimo == 'now') {
+            // sumar un día y ponerlo a las 10:00
+            $siguiente = (new DateTime($ultimo))
+                    ->setTimeZone($zona)
                     ->add(new DateInterval('P1D'))
                     ->setTime(10, 0, 0)
                     ->setTimeZone(new DateTimeZone('UTC'));
-            } else {
-                // sumar 15 minutos
-                $ultimo = (new DateTime($ultimo))
-                    ->add(new DateInterval('PT15M'));
-            }
+        } else {
+            // sumar 15 minutos
+            $siguiente = (new DateTime($ultimo))->add(new DateInterval('PT15M'));
         }
 
-        return $ultimo;
+        return $siguiente;
     }
 }

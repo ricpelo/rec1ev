@@ -2,10 +2,8 @@
 
 namespace app\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Citas;
 
 /**
  * CitasSearch represents the model behind the search form of `app\models\Citas`.
@@ -19,7 +17,7 @@ class CitasSearch extends Citas
     {
         return [
             [['id', 'usuario_id'], 'integer'],
-            [['fecha', 'hora'], 'safe'],
+            [['instante'], 'safe'],
         ];
     }
 
@@ -33,7 +31,7 @@ class CitasSearch extends Citas
     }
 
     /**
-     * Creates data provider instance with search query applied
+     * Creates data provider instance with search query applied.
      *
      * @param array $params
      *
@@ -60,8 +58,7 @@ class CitasSearch extends Citas
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'fecha' => $this->fecha,
-            'hora' => $this->hora,
+            'instante' => $this->instante,
             'usuario_id' => $this->usuario_id,
         ]);
 

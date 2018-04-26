@@ -1,5 +1,6 @@
 <?php
 
+use Yii;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -10,16 +11,16 @@ use yii\widgets\ActiveForm;
 
 <div class="citas-form">
 
+    <?= var_dump($model->errors) ?>
+
+    <h3>
+        La siguiente cita es <?= Yii::$app->formatter->asDatetime($model->instante) ?>
+    </h3>
+
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'fecha')->textInput() ?>
-
-    <?= $form->field($model, 'hora')->textInput() ?>
-
-    <?= $form->field($model, 'usuario_id')->textInput() ?>
-
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Confirmar cita', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
