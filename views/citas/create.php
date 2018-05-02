@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Citas */
 
-$this->title = 'Create Citas';
+$this->title = 'Reservar una cita';
 $this->params['breadcrumbs'][] = ['label' => 'Citas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

@@ -6,6 +6,7 @@ $log = require __DIR__ . '/log.php';
 
 $config = [
     'id' => 'basic',
+    'name' => 'Citas médicas',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -60,6 +61,7 @@ $config = [
         ],
         */
     ],
+    'defaultRoute' => 'citas/index',
     'params' => $params,
 ];
 

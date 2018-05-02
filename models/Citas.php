@@ -47,7 +47,7 @@ class Citas extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'instante' => 'Instante',
+            'instante' => 'Fecha y hora',
             'usuario_id' => 'Usuario ID',
         ];
     }
@@ -93,5 +93,15 @@ class Citas extends \yii\db\ActiveRecord
         }
 
         return $siguiente;
+    }
+
+    public static function anulables()
+    {
+        return static::find()
+            ->where('instante > localtimestamp')
+            ->andWhere([
+                'usuario_id' => Yii::$app->user->id,
+            ])
+            ->all();
     }
 }

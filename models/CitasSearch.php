@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -55,12 +56,16 @@ class CitasSearch extends Citas
             return $dataProvider;
         }
 
+        $dataProvider->sort->defaultOrder = ['instante' => SORT_DESC];
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'instante' => $this->instante,
-            'usuario_id' => $this->usuario_id,
+            'usuario_id' => Yii::$app->user->id,
         ]);
+
+        $query->andWhere('instante <= localtimestamp');
 
         return $dataProvider;
     }

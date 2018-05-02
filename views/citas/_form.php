@@ -11,8 +11,6 @@ use yii\widgets\ActiveForm;
 
 <div class="citas-form">
 
-    <?= var_dump($model->errors) ?>
-
     <h3>
         La siguiente cita es <?= Yii::$app->formatter->asDatetime($model->instante) ?>
     </h3>
